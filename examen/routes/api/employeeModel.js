@@ -82,13 +82,30 @@ function employeeModel(db){
     //Implementar
     //Se requiere agregar a un documento un nuevo tag
     // $push
-    return handler(new Error("No Implementado"), null);
+    var curatedTags = Array.isArray(tags) ? tags : [tags];
+    var updateObject = { "$set": { "tags": curatedTags } };
+    empColl.updateOne({ "_id": ObjectId(id) }, updateObject, (err, rsult) => {
+      if (err) {
+        handler(err, null);
+      } else {
+        handler(null, rsult.result);
+      }
+    });
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.removeEmployee = (id, handler) => {
     //Implementar
     //Se requiere eliminar un documento de la colección
-    return handler(new Error("No Implementado"), null);
+    empColl.deleteOne({ "_id": ObjectId(Id) }, (err, rslt) => {
+      if (err) {
+        console.log(err);
+        handler(err, null);
+      } else {
+        handler(null, rslt.result);
+      }
+    });
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.increaseAgeToAll = (ageDelta, handler) => {

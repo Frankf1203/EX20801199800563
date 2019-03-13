@@ -60,7 +60,7 @@ function initEmployee(db) {
   });
 
   router.get('/bytag/:tag', (req, res, next) => {
-    empModel.searchByTag((req.params.tag || '').split('_'), (err, docs) => {
+    empModel.getEmployeesByTag((req.params.tag || '').split('_'), (err, docs) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ "error": "No se encontro el tag" });
@@ -70,6 +70,15 @@ function initEmployee(db) {
     }); //searchByTag
   });
 
+  router.put('/addtag/:id', (req, res, next) => {
+    empModel.addEmployeeATag((req.body.tags || '').split('|'), req.params.id, (err, rsult) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ "error": "No se puede actualizar el tag" });
+      }
+      return res.status(200).json(rsult);
+    });
+  });
 
 
 
