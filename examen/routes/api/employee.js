@@ -80,6 +80,15 @@ function initEmployee(db) {
     });
   });
 
+  router.delete('/delete/:id', function (req, res, next) {
+    var _id = req.params.id;
+    empModel.deleteById(_id, (err, result) => {
+      if (err) {
+        return res.status(500).json({ "error": "No se pudo eliminar empleado" });
+      }
+      return res.status(200).json(result);
+    });
+
 
 
 
