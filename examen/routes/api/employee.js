@@ -29,6 +29,15 @@ function initEmployee(db) {
     
   });// all
 
+  router.get('/byid/:employeeid', (req, res, next) => {
+    empModel.getThingById(req.params.employeeid, (err, employeeDoc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ "error": "Error al obtener el empleado" });
+      }
+      return res.status(200).json(employeeDoc);
+    });
+  });
   
   return router;
 }
