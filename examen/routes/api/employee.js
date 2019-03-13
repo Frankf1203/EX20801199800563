@@ -39,6 +39,42 @@ function initEmployee(db) {
     });
   });
   
+  router.get('/bycompany/:company', (req, res, next) => {
+    empModel.getEmployeesByCompany(req.params.company, (err, companyDoc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ "error": "Error al obtener el company" });
+      }
+      return res.status(200).json(companyDoc);
+    });
+  });
+
+  router.get('/byagerange/:min/:max', (req, res, next) => {
+    empModel.getEmployeesByCompany(req.params.company, (err, companyDoc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ "error": "Error al obtener el company" });
+      }
+      return res.status(200).json(companyDoc);
+    });
+  });
+
+  router.get('/bytag/:tag', (req, res, next) => {
+    empModel.searchByTag((req.params.tag || '').split('_'), (err, docs) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ "error": "No se encontro el tag" });
+      } else {
+        return res.status(200).json(docs);
+      }
+    }); //searchByTag
+  });
+
+
+
+
+
+
   return router;
 }
 

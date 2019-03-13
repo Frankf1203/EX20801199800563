@@ -18,11 +18,11 @@ function employeeModel(db){
     //return handler(new Error("No Implementado"), null);
   }
 
-  lib.getEmployeesById = (thingId, handler) => {
+  lib.getEmployeesById = (employeeId, handler) => {
     // implementar
     // Obtener un Documento solo mostrar
     // email, phone, name y age
-    empColl.findOne({ "_id": new ObjectId(thingId) }, (err, doc) => {
+    empColl.findOne({ "_id": new ObjectId(employeeId) }, (err, doc) => {
       if (err) {
         handler(err, null);
       } else {
@@ -35,7 +35,14 @@ function employeeModel(db){
   lib.getEmployeesByCompany = (company, handler) => {
     // implementar
     // solo mostrar name, email, company
-    return handler(new Error("No Implementado"), null);
+    empColl.findOne({ "company": new ObjectId(company) }, (err, doc) => {
+      if (err) {
+        handler(err, null);
+      } else {
+        handler(null, doc);
+      }
+    });
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesByAgeRange = (ageLowLimit, ageHighLimit, handler) => {
@@ -44,7 +51,14 @@ function employeeModel(db){
     // que esten entre las edades indicadas por los parametros
     // ageLowLimit y ageHighLimit
     // solo mostrar name, age, email
-    return handler(new Error("No Implementado"), null);
+    empColl.findOne({ "age, range": new ObjectId(ageLowLimit,ageHighLimit) }, (err, doc) => {
+      if (err) {
+        handler(err, null);
+      } else {
+        handler(null, doc);
+      }
+    });
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesByTag = (tag, handler) => {
@@ -53,7 +67,15 @@ function employeeModel(db){
     // al menos una vez el tag dentro del arreglo
     // tags
     // mostrar solo name, email, tags
-    return handler(new Error("No Implementado"), null);
+    var queryObject = { "tags": { "$in": Array.isArray(tags) ? tags : [tags] } };
+    empColl.find(queryObject).toArray((err, docs) => {
+      if (err) {
+        handler(err, null);
+      } else {
+        handler(null, docs);
+      }
+    }); 
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.addEmployeeATag = ( tag, id, handler) => {
