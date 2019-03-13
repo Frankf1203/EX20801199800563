@@ -18,11 +18,15 @@ function initEmployee(db) {
    */
 
   router.get('/all', (req, res, next) => {
-    /*
-    empModel.xyz( (err, docs)=>{
+    
+    empModel.getEmployees( (err, docs)=>{
+      if (err) {
+        console.log(err);
+        return res.status(500).json({"error":"Something went wrong :("});
+      }
       return res.status(200).json(docs);
     });
-    */
+    
   });// all
 
   

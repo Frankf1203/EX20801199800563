@@ -6,7 +6,16 @@ function employeeModel(db){
   lib.getEmployees = (handler)=>{
     // implementar
     // obtener todos los documentos
-    return handler(new Error("No Implementado"), null);
+    empColl.find({}).toArray(
+      (err, docs) => {
+        if (err) {
+          handler(err, null);
+        } else {
+          handler(null, docs);
+        }
+      }
+    );
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesById = (id, handler) => {
